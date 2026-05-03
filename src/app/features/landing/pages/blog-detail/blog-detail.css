@@ -630,13 +630,19 @@ body {
 
 /* ── Language Bar ── */
 .lang-bar {
-  display: flex; align-items: center; flex-wrap: wrap;
-  gap: 8px; margin-top: 20px; padding-top: 16px;
-  border-top: 1px solid var(--border);
+  display: flex; 
+  align-items: center; 
+  flex-wrap: wrap;
+  gap: 8px; 
+  margin-top: 20px; 
+  padding-top: 16px;
+  /* border-top: 1px solid var(--border); */
 }
 .lang-bar-label {
-  font-size: 13px; color: var(--text-muted);
-  font-weight: 500; white-space: nowrap;
+  font-size: 13px; 
+  color: var(--text-muted);
+  font-weight: 500; 
+  white-space: nowrap;
 }
 .lang-btn {
   padding: 5px 12px; border-radius: 20px; font-size: 13px; font-weight: 500;

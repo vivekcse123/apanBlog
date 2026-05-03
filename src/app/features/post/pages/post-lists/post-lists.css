@@ -318,7 +318,7 @@ th {
   color: #ffffff !important;
   background: transparent !important;
   white-space: nowrap;
-  border-bottom: none;
+  border-bottom: none !important;
 }
 
 /* ── Table Body ── */
@@ -433,13 +433,11 @@ tbody > tr:hover td { background: var(--bg-hover); }
 .date-cell { color: var(--text-secondary); white-space: nowrap; }
 
 .last-active-cell {
-  display: flex;
-  flex-direction: column;
-  gap: 1px;
+  vertical-align: middle;
 }
 
-.date-text { font-size: 13px; color: var(--text-primary); white-space: nowrap; }
-.time-ago  { font-size: 11px; color: #43cea2; font-weight: 500; }
+.date-text { display: block; font-size: 13px; color: var(--text-primary); white-space: nowrap; }
+.time-ago  { display: block; font-size: 11px; color: #43cea2; font-weight: 500; margin-top: 2px; }
 
 /* ── Empty State ── */
 .empty-row { text-align: center; }

@@ -8,7 +8,7 @@ interface NavItem { label: string; route: string[]; icon: string; }
 @Component({
   selector: 'app-user-profile',
   standalone: true,
-  imports: [CommonModule, RouterLink, FormatCountPipe],
+  imports: [CommonModule, FormatCountPipe],
   templateUrl: './user-profile.html',
   styleUrl: './user-profile.css',
 })
