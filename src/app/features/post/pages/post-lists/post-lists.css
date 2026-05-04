@@ -719,11 +719,22 @@ tbody > tr:hover td { background: var(--bg-hover); }
   .page-header { flex-direction: column; align-items: stretch; }
   .search-input { width: 100%; }
   .search-wrap  { width: 100%; }
-  .filters-row  { gap: 8px; }
-  .filter-select { flex: 1; min-width: 0; }
+
+  .filters-row {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 8px;
+  }
+  .filter-select { width: 100%; }
   .filters-spacer { display: none; }
-  .add-btn { width: 100%; justify-content: center; }
-  .stats-bar { gap: 8px; }
+  .filter-btn { width: 100%; justify-content: center; }
+  .add-btn { grid-column: 1 / -1; width: 100%; justify-content: center; }
+
+  .stats-bar {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 8px;
+  }
   .stat-card { padding: 12px 12px; gap: 8px; }
   .stat-icon-wrap { width: 32px; height: 32px; }
   .stat-value { font-size: 18px; }
@@ -752,6 +763,14 @@ tbody > tr:hover td { background: var(--bg-hover); }
     padding: 12px 14px;
     background: var(--bg-surface-alt);
     border-bottom: 1px solid var(--border);
+    max-width: none;
+    width: 100%;
+    box-sizing: border-box;
+  }
+
+  td.cell-blog-title .blog-title-text,
+  td.cell-blog-title .blog-sub {
+    max-width: 100%;
   }
 
   td {

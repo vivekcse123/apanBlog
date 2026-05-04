@@ -125,24 +125,28 @@
 
 /* ── Close Button ── */
 .close-btn {
-  width: 30px;
-  height: 30px;
+  width: 32px;
+  height: 32px;
   border-radius: 50%;
-  border: 1px solid var(--border);
-  background: transparent;
-  font-size: 18px;
+  border: 1.5px solid var(--border);
+  background: var(--bg-surface-alt);
+  font-size: 16px;
   color: var(--text-muted);
   cursor: pointer;
   display: flex;
   align-items: center;
   justify-content: center;
-  transition: background 0.2s ease, color 0.2s ease, transform 0.3s ease;
+  transition: background 0.2s, color 0.2s, border-color 0.2s, transform 0.2s;
+  flex-shrink: 0;
 }
 
-.close-btn:hover {
-  background: var(--bg-hover);
-  color: var(--text-primary);
-  transform: rotate(90deg);
+@media (hover: hover) {
+  .close-btn:hover {
+    background: color-mix(in srgb, #ef4444 10%, transparent);
+    color: #ef4444;
+    border-color: #ef4444;
+    transform: rotate(90deg);
+  }
 }
 
 /* ── Stats ── */

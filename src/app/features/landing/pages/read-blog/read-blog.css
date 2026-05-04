@@ -183,11 +183,13 @@
   transition: background 0.15s ease, color 0.15s ease, transform 0.25s ease, border-color 0.15s ease;
 }
 
-.close-btn:hover {
-  background: var(--ink);
-  color: var(--paper);
-  border-color: var(--ink);
-  transform: rotate(90deg);
+@media (hover: hover) {
+  .close-btn:hover {
+    background: var(--ink);
+    color: var(--paper);
+    border-color: var(--ink);
+    transform: rotate(90deg);
+  }
 }
 
 /* ─── Body ───────────────────────────────────────────────── */

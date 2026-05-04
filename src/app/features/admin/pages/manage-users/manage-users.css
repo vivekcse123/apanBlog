@@ -654,12 +654,21 @@ tbody > tr:hover td { background: var(--bg-hover); }
   .search-input { width: 100%; }
   .search-wrap  { width: 100%; }
 
-  .filters-row { gap: 8px; }
-  .filter-select { flex: 1; min-width: 0; }
+  .filters-row {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 8px;
+  }
+  .filter-select { width: 100%; }
   .filters-spacer { display: none; }
-  .add-btn { width: 100%; justify-content: center; }
+  .today-btn { grid-column: 1 / -1; width: 100%; justify-content: center; }
+  .add-btn { grid-column: 1 / -1; width: 100%; justify-content: center; }
 
-  .stats-bar { gap: 8px; }
+  .stats-bar {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 8px;
+  }
   .stat-card { padding: 12px 12px; gap: 8px; }
   .stat-icon-wrap { width: 32px; height: 32px; }
   .stat-value { font-size: 18px; }

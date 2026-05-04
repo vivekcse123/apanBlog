@@ -147,16 +147,18 @@ interface Feature {
     }
 
     .wm-x-btn {
-      width: 30px; height: 30px; border-radius: 50%;
+      width: 32px; height: 32px; border-radius: 50%;
       border: 1.5px solid var(--border);
-      background: var(--bg-surface-alt); color: var(--text-secondary);
-      font-size: 13px; cursor: pointer; flex-shrink: 0;
+      background: var(--bg-surface-alt); color: var(--text-muted);
+      font-size: 16px; cursor: pointer; flex-shrink: 0;
       display: flex; align-items: center; justify-content: center;
-      transition: background 0.2s, border-color 0.2s, color 0.2s;
+      transition: background 0.2s, border-color 0.2s, color 0.2s, transform 0.2s;
     }
-    .wm-x-btn:hover {
-      background: rgba(239, 68, 68, 0.1);
-      border-color: #ef4444; color: #ef4444;
+    @media (hover: hover) {
+      .wm-x-btn:hover {
+        background: color-mix(in srgb, #ef4444 10%, transparent);
+        border-color: #ef4444; color: #ef4444; transform: rotate(90deg);
+      }
     }
 
     /* ── Scrollable body ── */

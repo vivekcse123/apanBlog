@@ -305,6 +305,8 @@
   padding: 1rem 1.25rem;
   display: flex;
   flex-direction: column;
+  min-width: 0;
+  overflow: hidden;
 }
 
 .info-header {
@@ -351,6 +353,7 @@
   gap: 0;
   max-height: 200px;
   overflow-y: auto;
+  overflow-x: hidden;
   padding-right: 4px;
 }
 
@@ -387,6 +390,7 @@
   text-overflow: ellipsis;
   margin-bottom: 3px;
   line-height: 1.2;
+  width: 100%;
 }
 
 .page-bar-wrap {
@@ -417,6 +421,7 @@
   gap: 0;
   max-height: 200px;
   overflow-y: auto;
+  overflow-x: hidden;
   padding-right: 4px;
 }
 
@@ -589,6 +594,7 @@
   overflow-x: hidden;
   max-height: 340px;
   padding: 4px 0;
+  min-width: 0;
 }
 
 .visits-list::-webkit-scrollbar-thumb {
@@ -817,6 +823,11 @@
   .stat-grid    { grid-template-columns: 1fr 1fr; }
   .bottom-row   { grid-template-columns: 1fr; }
   .page-header  { flex-direction: column; align-items: flex-start; gap: 12px; }
+
+  .visit-item { gap: 8px; padding: 8px 12px; }
+  .visit-page-path { max-width: none; }
+  .visit-ip-text   { max-width: 90px; }
+  .visit-city      { max-width: 80px; }
 }
 
 .visit-count-badge {

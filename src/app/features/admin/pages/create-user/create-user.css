@@ -40,12 +40,28 @@
   position: absolute;
   top: 15px;
   right: 18px;
-  background: none;
-  border: none;
-  font-size: 18px;
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  border: 1.5px solid var(--border);
+  background: var(--bg-surface-alt);
+  font-size: 16px;
   color: var(--text-muted);
   cursor: pointer;
-  transition: color 0.2s ease;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: background 0.2s, color 0.2s, border-color 0.2s, transform 0.2s;
+  flex-shrink: 0;
+}
+
+@media (hover: hover) {
+  .close-btn:hover {
+    background: color-mix(in srgb, #ef4444 10%, transparent);
+    color: #ef4444;
+    border-color: #ef4444;
+    transform: rotate(90deg);
+  }
 }
 
 .heading h2 {
@@ -57,9 +73,6 @@
 .heading p {
   font-size: 14px;
   color: var(--text-muted);
-}
-.close-btn:hover {
-  color: var(--text-primary);
 }
 
 /* ── Heading ── */

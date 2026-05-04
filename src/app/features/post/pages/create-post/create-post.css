@@ -62,11 +62,13 @@
   flex-shrink: 0;
 }
 
-.close-btn:hover {
-  background: color-mix(in srgb, #ef4444 10%, transparent);
-  color: #ef4444;
-  border-color: #ef4444;
-  transform: rotate(90deg);
+@media (hover: hover) {
+  .close-btn:hover {
+    background: color-mix(in srgb, #ef4444 10%, transparent);
+    color: #ef4444;
+    border-color: #ef4444;
+    transform: rotate(90deg);
+  }
 }
 
 .heading {
