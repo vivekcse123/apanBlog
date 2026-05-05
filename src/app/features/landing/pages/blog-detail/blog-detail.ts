@@ -132,9 +132,61 @@ export class BlogDetail implements OnInit, AfterViewInit, OnDestroy {
 
   // bypassSecurityTrustHtml is intentional — content is authored/trusted DB content.
   // Falls back to original content when no translation is active.
-  safeContent = computed<SafeHtml>(() =>
-    this.sanitizer.bypassSecurityTrustHtml(this.translation()?.content ?? this._contentHtml())
-  );
+  // When translation is active, images are re-injected from original if the API stripped them.
+  safeContent = computed<SafeHtml>(() => {
+    const translated = this.translation();
+    const original   = this._contentHtml();
+    if (!translated) return this.sanitizer.bypassSecurityTrustHtml(original);
+    return this.sanitizer.bypassSecurityTrustHtml(
+      this.mergeTranslatedContent(translated.content, original)
+    );
+  });
+
+  private mergeTranslatedContent(translated: string, original: string): string {
+    if (!translated?.trim() || translated.trim().length < 50) return original;
+
+    const stripTags = (h: string) => h.replace(/<[^>]*>/g, '').trim();
+
+    // ── Step 1: Re-inject media stripped by translation API ───────────────
+    let content = translated;
+    const mediaRe    = /<figure[\s\S]*?<\/figure>|<img[^>]+\/?>|<video[\s\S]*?<\/video>|<iframe[\s\S]*?<\/iframe>/gi;
+    const mediaBlocks = original.match(mediaRe) ?? [];
+
+    if (mediaBlocks.length && !/<img[\s>]/i.test(content)) {
+      const pos = content.indexOf('</p>') + 4 || content.length;
+      content   = content.slice(0, pos) + mediaBlocks.join('') + content.slice(pos);
+    }
+
+    // ── Step 2: Always append original content after last media block ─────
+    // Translation APIs frequently truncate long articles. Rather than guessing
+    // if truncation occurred, we always append whatever original content follows
+    // the last image/figure — this ensures nothing is ever invisible.
+    let lastMediaEnd = -1;
+    const scanRe = /<figure[\s\S]*?<\/figure>|<img[^>]+\/?>|<video[\s\S]*?<\/video>|<iframe[\s\S]*?<\/iframe>/gi;
+    let m: RegExpExecArray | null;
+    while ((m = scanRe.exec(original)) !== null) {
+      lastMediaEnd = m.index + m[0].length;
+    }
+
+    if (lastMediaEnd !== -1) {
+      const afterMedia = original.slice(lastMediaEnd).trim();
+      if (stripTags(afterMedia).length > 80) {
+        // Only append if the translated content doesn't already contain this text
+        const afterMediaText  = stripTags(afterMedia).slice(0, 60).toLowerCase();
+        const alreadyPresent  = stripTags(content).toLowerCase().includes(afterMediaText);
+
+        if (!alreadyPresent) {
+          content +=
+            `<div class="translation-remainder">` +
+            `<p class="translation-remainder-note"><em>— Continued —</em></p>` +
+            afterMedia +
+            `</div>`;
+        }
+      }
+    }
+
+    return content;
+  }
 
   // ── Likes / Bookmarks ─────────────────────────────────────────────────────
   likedPostIds      = signal<Set<string>>(new Set());

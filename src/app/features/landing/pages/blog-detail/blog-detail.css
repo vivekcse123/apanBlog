@@ -673,6 +673,20 @@ body {
   color: var(--text-primary); margin-bottom: 60px;
 }
 
+/* Shown when translation is partial — remaining original content appended below */
+.translation-remainder {
+  margin-top: 32px;
+  padding-top: 24px;
+  border-top: 2px dashed var(--border);
+}
+.translation-remainder-note {
+  font-size: 12px !important;
+  color: var(--text-muted) !important;
+  text-align: center;
+  margin-bottom: 20px !important;
+  letter-spacing: 0.02em;
+}
+
 .blog-content h1, .blog-content h2,
 .blog-content h3, .blog-content h4 {
   font-family: 'Playfair Display', serif; font-weight: 700;
