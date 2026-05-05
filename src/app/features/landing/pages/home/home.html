@@ -22,17 +22,34 @@
             title="Toggle theme">
       <span class="theme-icon" aria-hidden="true">{{ themeService.theme() === 'dark' ? '☀' : '☾' }}</span>
     </button>
+
     <button class="about-btn desktop-only"
             routerLink="/about"
-            aria-label="About ApnaInsights">About Us</button>
-    <button class="create-btn desktop-only"
-            routerLink="/auth/login"
-            aria-label="Sign in to write a story on ApnaInsights">
-      <span aria-hidden="true">✦</span> Write a Story
-    </button>
-    <button class="signup-btn desktop-only"
-            routerLink="/auth/register"
-            aria-label="Create a free ApnaInsights account">Sign Up</button>
+            aria-label="About ApnaInsights">About</button>
+
+    @if (isLoggedIn) {
+      <a class="user-chip desktop-only"
+         [routerLink]="dashboardRoute"
+         [attr.aria-label]="'Go to dashboard — ' + loggedInFirstName">
+        <div class="user-chip-avatar">
+          @if (loggedInAvatar) {
+            <img [src]="loggedInAvatar" [alt]="loggedInFirstName" />
+          } @else {
+            {{ loggedInFirstName.charAt(0).toUpperCase() }}
+          }
+        </div>
+        <span class="user-chip-name">{{ loggedInFirstName }}</span>
+      </a>
+    } @else {
+      <button class="create-btn desktop-only"
+              routerLink="/auth/login"
+              aria-label="Sign in to write a story on ApnaInsights">
+        <span aria-hidden="true">✦</span> Write a Story
+      </button>
+      <button class="signup-btn desktop-only"
+              routerLink="/auth/register"
+              aria-label="Create a free ApnaInsights account">Sign Up</button>
+    }
 
     <button class="hamburger"
             (click)="menuOpen.set(!menuOpen())"
@@ -56,16 +73,25 @@
      routerLink="/about"
      (click)="menuOpen.set(false)"
      aria-label="About ApnaInsights">About</a>
-  <a class="drawer-link crt-btn"
-     routerLink="/auth/login"
-     (click)="menuOpen.set(false)"
-     aria-label="Sign in to write a story">
-    <span aria-hidden="true">✦</span>&nbsp; Write a Story
-  </a>
-  <a class="drawer-link"
-     routerLink="/auth/register"
-     (click)="menuOpen.set(false)"
-     aria-label="Sign up for a free account">Sign Up</a>
+  @if (isLoggedIn) {
+    <a class="drawer-link crt-btn"
+       [routerLink]="dashboardRoute"
+       (click)="menuOpen.set(false)"
+       [attr.aria-label]="'Go to dashboard'">
+      <span aria-hidden="true">✦</span>&nbsp; {{ loggedInFirstName }}'s Dashboard
+    </a>
+  } @else {
+    <a class="drawer-link crt-btn"
+       routerLink="/auth/login"
+       (click)="menuOpen.set(false)"
+       aria-label="Sign in to write a story">
+      <span aria-hidden="true">✦</span>&nbsp; Write a Story
+    </a>
+    <a class="drawer-link"
+       routerLink="/auth/register"
+       (click)="menuOpen.set(false)"
+       aria-label="Sign up for a free account">Sign Up</a>
+  }
 </nav>
 
 <div class="drawer-backdrop"

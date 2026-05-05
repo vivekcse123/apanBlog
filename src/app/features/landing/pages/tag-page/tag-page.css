@@ -28,8 +28,8 @@
   -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;
 }
 .tp-back-btn {
-  font-size: 14px; color: var(--text-secondary); text-decoration: none;
-  border: 1.5px solid var(--border); border-radius: 8px; padding: 6px 14px;
+  font-size: 13px; color: var(--text-secondary); text-decoration: none;
+  border: 1.5px solid var(--border); border-radius: 8px; padding: 7px 14px;
   transition: border-color 0.2s, color 0.2s;
 }
 .tp-back-btn:hover { border-color: var(--accent); color: var(--accent-text); }

@@ -12,7 +12,8 @@
       </svg>
     </button>
 
-    <div class="panel-avatar-wrap">
+    <button class="panel-avatar-wrap" (click)="goToSettings()"
+            type="button" title="Go to Account Settings" aria-label="Open account settings">
       <div class="panel-avatar">
         @if (avatar) {
           <img [src]="avatar" alt="Profile photo" class="panel-avatar-img" />
@@ -21,12 +22,14 @@
         }
       </div>
       <span class="panel-role-badge role-{{ role }}">{{ roleLabel }}</span>
-    </div>
+    </button>
 
-    <div class="panel-identity">
+    <button class="panel-identity" (click)="goToSettings()"
+            type="button" title="Go to Account Settings" aria-label="Open account settings">
       <span class="panel-name">{{ name }}</span>
       <span class="panel-email">{{ email }}</span>
-    </div>
+      <span class="panel-settings-hint">⚙ Settings</span>
+    </button>
   </div>
 
   <!-- ── Stats ── -->

@@ -151,8 +151,8 @@
   border: 1.5px solid var(--border);
   color: var(--text-secondary);
   border-radius: 8px;
-  padding: 8px 16px;
-  font-size: 14px;
+  padding: 7px 14px;
+  font-size: 13px;
   font-weight: 600;
   font-family: 'DM Sans', sans-serif;
   cursor: pointer;
@@ -217,8 +217,8 @@
   border: 1.5px solid var(--accent);
   color: var(--accent-text);
   border-radius: 8px;
-  padding: 8px 16px;
-  font-size: 14px;
+  padding: 7px 14px;
+  font-size: 13px;
   font-weight: 600;
   font-family: 'DM Sans', sans-serif;
   cursor: pointer;
@@ -240,8 +240,8 @@
   border: none;
   color: #ffffff;
   border-radius: 8px;
-  padding: 8px 16px;
-  font-size: 14px;
+  padding: 7px 14px;
+  font-size: 13px;
   font-weight: 600;
   font-family: 'DM Sans', sans-serif;
   cursor: pointer;

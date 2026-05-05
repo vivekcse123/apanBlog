@@ -724,6 +724,19 @@ export class Home implements OnInit, OnDestroy {
   get currentUser(): User | null { return this.currentUserData(); }
   get isLoggedIn(): boolean      { return this.auth.isAuthorized() && !!this.currentUserData(); }
   get loggedInUserName(): string { return this.currentUserData()?.name ?? 'Anonymous'; }
+  get loggedInFirstName(): string {
+    return this.currentUserData()?.name?.split(' ')[0] ?? 'Me';
+  }
+  get loggedInAvatar(): string   { return (this.currentUserData() as any)?.avatar ?? ''; }
+  get dashboardRoute(): string {
+    const u = this.currentUserData();
+    if (!u) return '/';
+    const role = (u as any).role;
+    const id   = (u as any)._id;
+    if (role === 'admin')       return `/admin/${id}`;
+    if (role === 'super_admin') return `/super-admin/${id}`;
+    return `/user/${id}`;
+  }
 
 
   submitComment(): void {

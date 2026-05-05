@@ -91,7 +91,14 @@
   flex-direction: column;
   align-items: center;
   gap: 8px;
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 0;
+  border-radius: 50%;
+  transition: opacity 0.2s, transform 0.2s;
 }
+.panel-avatar-wrap:hover { opacity: 0.85; transform: scale(1.05); }
 
 .panel-avatar {
   width: 56px;
@@ -154,7 +161,15 @@
   flex-direction: column;
   gap: 3px;
   align-items: center;
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 6px 10px;
+  border-radius: 10px;
+  transition: background 0.2s;
 }
+.panel-identity:hover { background: rgba(255,255,255,0.08); }
+.panel-identity:hover .panel-settings-hint { opacity: 1; }
 
 .panel-name {
   font-size: 15px;
@@ -166,10 +181,19 @@
 .panel-email {
   font-size: 12px;
   color: rgba(255, 255, 255, 0.6);
-  max-width: 240px;
+  max-width: 200px;
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;
+}
+
+.panel-settings-hint {
+  font-size: 11px;
+  color: #43cea2;
+  font-weight: 600;
+  opacity: 0;
+  transition: opacity 0.2s;
+  letter-spacing: 0.02em;
 }
 
 /* ── Stats ── */

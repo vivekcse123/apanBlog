@@ -34,8 +34,8 @@
 }
 
 .cat-back-btn {
-  font-size: 14px; color: var(--text-secondary); text-decoration: none;
-  border: 1.5px solid var(--border); border-radius: 8px; padding: 6px 14px;
+  font-size: 13px; color: var(--text-secondary); text-decoration: none;
+  border: 1.5px solid var(--border); border-radius: 8px; padding: 7px 14px;
   transition: border-color 0.2s, color 0.2s;
   white-space: nowrap;
 }
@@ -287,5 +287,5 @@
     to   { opacity: 1; transform: translateY(0); }
   }
 
-  .cat-back-btn { font-size: 13px; padding: 6px 10px; }
+  .cat-back-btn { font-size: 13px; padding: 7px 10px; }
 }

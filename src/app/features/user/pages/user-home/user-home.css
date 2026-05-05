@@ -104,6 +104,30 @@
 
 .btn-write:active { transform: scale(0.97); }
 
+/* Read Stories — mobile only, hidden on desktop */
+.btn-read-stories {
+  display: none;
+  align-items: center;
+  gap: 7px;
+  padding: 9px 18px;
+  border-radius: 10px;
+  background: transparent;
+  border: 1.5px solid var(--border);
+  color: var(--text-secondary);
+  font-size: 13px;
+  font-weight: 600;
+  font-family: inherit;
+  cursor: pointer;
+  white-space: nowrap;
+  text-decoration: none;
+  transition: border-color 0.2s, color 0.2s, background 0.2s;
+}
+.btn-read-stories:hover {
+  border-color: #43cea2;
+  color: #43cea2;
+  background: color-mix(in srgb, #43cea2 8%, transparent);
+}
+
 /* Date pill */
 .date-pill {
   font-size: 12px;
@@ -1328,6 +1352,8 @@
    RESPONSIVE — Mobile 560px
 ══════════════════════════════════════════ */
 @media (max-width: 560px) {
+  .btn-read-stories { display: inline-flex; }
+
   .dash       { padding: 14px 14px 28px; gap: 16px; }
   .dash-title { font-size: 20px; }
   .btn-write  { padding: 8px 14px; font-size: 12px; }

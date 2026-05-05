@@ -1,6 +1,6 @@
 import { CommonModule } from '@angular/common';
 import { Component, ElementRef, EventEmitter, Input, Output, HostListener } from '@angular/core';
-import { RouterLink } from '@angular/router';
+import { Router, RouterLink } from '@angular/router';
 import { FormatCountPipe } from '../pipes/format-count-pipe';
 
 interface NavItem { label: string; route: string[]; icon: string; }
@@ -13,7 +13,13 @@ interface NavItem { label: string; route: string[]; icon: string; }
   styleUrl: './user-profile.css',
 })
 export class UserProfile {
-  constructor(private elRef: ElementRef) {}
+  constructor(private elRef: ElementRef, private router: Router) {}
+
+  goToSettings(): void {
+    const route = ['/' + this.basePath, this.userId, 'settings'];
+    this.router.navigate(route);
+    this.close.emit();
+  }
 
   @Input() name!:        string;
   @Input() role!:        string;
