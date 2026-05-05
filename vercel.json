@@ -39,6 +39,14 @@
       "destination": "/api/sitemap"
     },
     {
+      "source": "/rss.xml",
+      "destination": "/api/rss"
+    },
+    {
+      "source": "/news-sitemap.xml",
+      "destination": "/api/news-sitemap"
+    },
+    {
       "source": "/blog/:path*",
       "destination": "/api/ssr"
     },
