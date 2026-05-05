@@ -1,0 +1,124 @@
+<div class="tag-page">
+
+  <!-- NAV -->
+  <header class="tp-nav">
+    <a routerLink="/" class="tp-nav-logo" aria-label="ApnaInsights">
+      <img src="/logo-96.png" alt="ApnaInsights" width="30" height="30" loading="eager" />
+      <span class="tp-nav-name">ApnaInsights</span>
+    </a>
+    <a routerLink="/" class="tp-back-btn">← Home</a>
+  </header>
+
+  <!-- BREADCRUMB -->
+  <nav class="tp-breadcrumb" aria-label="Breadcrumb">
+    <ol class="tp-breadcrumb-list" itemscope itemtype="https://schema.org/BreadcrumbList">
+      <li itemprop="itemListElement" itemscope itemtype="https://schema.org/ListItem">
+        <a routerLink="/" itemprop="item"><span itemprop="name">Home</span></a>
+        <meta itemprop="position" content="1" />
+      </li>
+      <span class="bc-sep" aria-hidden="true">›</span>
+      <li itemprop="itemListElement" itemscope itemtype="https://schema.org/ListItem">
+        <span itemprop="name" aria-current="page">#{{ tagSlug() }}</span>
+        <meta itemprop="position" content="2" />
+      </li>
+    </ol>
+  </nav>
+
+  <!-- HERO -->
+  <section class="tp-hero">
+    <div class="tp-tag-badge" aria-hidden="true">#</div>
+    <h1 class="tp-title">#{{ tagSlug() }}</h1>
+    <p class="tp-subtitle">
+      @if (!isLoading()) {
+        {{ posts().length }} blog{{ posts().length !== 1 ? 's' : '' }} tagged #{{ tagSlug() }}
+      } @else {
+        Finding stories…
+      }
+    </p>
+  </section>
+
+  <!-- GRID -->
+  <main class="tp-main" id="main-content">
+
+    @if (isLoading()) {
+      <div class="tp-skeleton-grid">
+        @for (_ of [1,2,3,4,5,6]; track $index) {
+          <div class="tp-skeleton-card">
+            <div class="skel skel-img"></div>
+            <div class="skel skel-line skel-title"></div>
+            <div class="skel skel-line skel-desc"></div>
+            <div class="skel skel-line skel-meta"></div>
+          </div>
+        }
+      </div>
+
+    } @else if (posts().length === 0) {
+      <div class="tp-empty">
+        <span class="tp-empty-icon">🏷️</span>
+        <h2>No stories found</h2>
+        <p>No published stories are tagged <strong>#{{ tagSlug() }}</strong> yet.</p>
+        <a routerLink="/" class="tp-empty-btn">Browse all stories</a>
+      </div>
+
+    } @else {
+      <div class="tp-grid">
+        @for (post of posts(); track post._id) {
+          <article class="tp-card"
+                   (click)="navigateToBlog(post)"
+                   role="button"
+                   tabindex="0"
+                   (keydown.enter)="navigateToBlog(post)"
+                   [attr.aria-label]="post.title">
+
+            <div class="tp-card-img-wrap">
+              @if (post.featuredImage) {
+                <img [src]="post.featuredImage" [alt]="post.title"
+                     class="tp-card-img" loading="lazy" width="400" height="225" />
+              } @else {
+                <div class="tp-card-no-img">
+                  <span class="tp-card-letter">{{ post.title.charAt(0).toUpperCase() }}</span>
+                </div>
+              }
+            </div>
+
+            <div class="tp-card-body">
+              @if (post.categories[0]) {
+                <span class="tp-card-category">{{ post.categories[0] }}</span>
+              }
+              <h2 class="tp-card-title">{{ post.title }}</h2>
+              <p class="tp-card-desc">{{ post.description }}</p>
+              <div class="tp-card-meta">
+                <span>{{ getAuthorName(post) }}</span>
+                <span class="meta-dot" aria-hidden="true">·</span>
+                <time [attr.datetime]="post.createdAt | date:'yyyy-MM-dd'">{{ post.createdAt | timeAgo }}</time>
+                <span class="meta-dot" aria-hidden="true">·</span>
+                <span>{{ readingTime(post.content) }} min read</span>
+              </div>
+            </div>
+
+          </article>
+        }
+      </div>
+    }
+
+  </main>
+
+  <!-- FOOTER -->
+  <footer class="tp-footer">
+    <div class="tp-footer-inner">
+      <a routerLink="/" class="tp-footer-logo">
+        <img src="/logo-96.png" alt="ApnaInsights" width="22" height="22" loading="lazy" />
+        <span>ApnaInsights</span>
+      </a>
+      <nav class="tp-footer-links" aria-label="Footer links">
+        <a routerLink="/">Home</a>
+        <span aria-hidden="true">·</span>
+        <a routerLink="/about">About</a>
+        <span aria-hidden="true">·</span>
+        <a routerLink="/privacy-policy">Privacy Policy</a>
+      </nav>
+      <p class="tp-footer-copy">© {{ currentYear }} ApnaInsights · Made with ❤️ in India</p>
+    </div>
+  </footer>
+
+</div>

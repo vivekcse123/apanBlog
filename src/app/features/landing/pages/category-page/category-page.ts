@@ -9,6 +9,7 @@ import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { PostService } from '../../../post/services/post-service';
 import { PostCache } from '../../../post/services/post-cache';
 import { Post } from '../../../../core/models/post.model';
+import { TimeAgoPipe } from '../../../../shared/pipes/time-ago-pipe';
 
 const CATEGORIES: string[] = [
   'Update', 'News', 'Sports', 'Entertainment', 'Health', 'Technology', 'Business',
@@ -18,7 +19,7 @@ const CATEGORIES: string[] = [
 @Component({
   selector: 'app-category-page',
   standalone: true,
-  imports: [RouterLink, CommonModule, DatePipe],
+  imports: [RouterLink, CommonModule, DatePipe, TimeAgoPipe],
   templateUrl: './category-page.html',
   styleUrl: './category-page.css',
 })

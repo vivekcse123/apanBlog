@@ -9,6 +9,7 @@ import { fromEvent } from 'rxjs';
 import { throttleTime, timeout } from 'rxjs/operators';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { Meta, Title, DomSanitizer, SafeHtml } from '@angular/platform-browser';
+import { TimeAgoPipe } from '../../../../shared/pipes/time-ago-pipe';
 import { TransferState, makeStateKey } from '@angular/core';
 
 import { PostService } from '../../../post/services/post-service';
@@ -58,7 +59,7 @@ const VISIBLE_STATUSES = new Set(['published', 'draft', 'pending']);
 @Component({
   selector:    'app-blog-detail',
   standalone:  true,
-  imports:     [RouterLink, CommonModule, FormsModule],
+  imports:     [RouterLink, CommonModule, FormsModule, TimeAgoPipe],
   templateUrl: './blog-detail.html',
   styleUrl:    './blog-detail.css',
   // ngSkipHydration prevents DOM reconciliation mismatches caused by the
@@ -1637,6 +1638,22 @@ export class BlogDetail implements OnInit, AfterViewInit, OnDestroy {
 
   filterByTag(tag: string): void {
     this.router.navigate(['/category', tag.toLowerCase()]);
+    if (isPlatformBrowser(this.platformId)) {
+      window.scrollTo({ top: 0, behavior: 'instant' });
+    }
+  }
+
+  navigateToAuthor(): void {
+    const id = this.authorId();
+    if (!id) return;
+    this.router.navigate(['/author', id]);
+    if (isPlatformBrowser(this.platformId)) {
+      window.scrollTo({ top: 0, behavior: 'instant' });
+    }
+  }
+
+  navigateToTag(tag: string): void {
+    this.router.navigate(['/tag', tag.toLowerCase()]);
     if (isPlatformBrowser(this.platformId)) {
       window.scrollTo({ top: 0, behavior: 'instant' });
     }

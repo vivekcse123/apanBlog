@@ -1,0 +1,139 @@
+import {
+  Component, OnInit, inject, signal, computed, DestroyRef, PLATFORM_ID, HostListener
+} from '@angular/core';
+import { ActivatedRoute, Router, RouterLink } from '@angular/router';
+import { CommonModule, DatePipe, isPlatformBrowser } from '@angular/common';
+import { Meta, Title } from '@angular/platform-browser';
+import { DOCUMENT } from '@angular/common';
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
+import { PostService } from '../../../post/services/post-service';
+import { PostCache } from '../../../post/services/post-cache';
+import { Post } from '../../../../core/models/post.model';
+import { TimeAgoPipe } from '../../../../shared/pipes/time-ago-pipe';
+
+@Component({
+  selector: 'app-tag-page',
+  standalone: true,
+  imports: [RouterLink, CommonModule, DatePipe, TimeAgoPipe],
+  templateUrl: './tag-page.html',
+  styleUrl: './tag-page.css',
+})
+export class TagPage implements OnInit {
+  private route       = inject(ActivatedRoute);
+  private router      = inject(Router);
+  private postService = inject(PostService);
+  private postCache   = inject(PostCache);
+  private destroyRef  = inject(DestroyRef);
+  private platformId  = inject(PLATFORM_ID);
+  private meta        = inject(Meta);
+  private titleSvc    = inject(Title);
+  private document    = inject(DOCUMENT);
+
+  tagSlug  = signal('');
+  allPosts = signal<Post[]>([]);
+  isLoading = signal(true);
+
+  posts = computed(() => {
+    const tag = this.tagSlug().toLowerCase();
+    return this.allPosts()
+      .filter(p =>
+        p.status === 'published' &&
+        Array.isArray(p.tags) &&
+        p.tags.some(t => t.toLowerCase() === tag)
+      )
+      .sort((a, b) => new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime());
+  });
+
+  currentYear = new Date().getFullYear();
+
+  ngOnInit(): void {
+    this.route.paramMap.pipe(takeUntilDestroyed(this.destroyRef)).subscribe(params => {
+      const tag = params.get('tag') ?? '';
+      if (!tag) { this.router.navigate(['/']); return; }
+
+      this.tagSlug.set(tag.toLowerCase());
+      this.setMeta(tag);
+      this.loadPosts();
+    });
+  }
+
+  private loadPosts(): void {
+    this.isLoading.set(true);
+    const cached = this.postCache.get();
+    if (cached?.length) {
+      this.allPosts.set(cached as unknown as Post[]);
+      this.isLoading.set(false);
+      return;
+    }
+    this.postService.getAllPost(1, 500).pipe(takeUntilDestroyed(this.destroyRef)).subscribe({
+      next: (res) => {
+        const posts = res.data ?? [];
+        if (posts.length) this.postCache.set(posts.map((p: Post) => ({ ...p, _ts: Date.now() })));
+        this.allPosts.set(posts);
+        this.isLoading.set(false);
+      },
+      error: () => this.isLoading.set(false),
+    });
+  }
+
+  private setMeta(tag: string): void {
+    const display = tag.charAt(0).toUpperCase() + tag.slice(1);
+    const url     = `https://apnainsights.com/tag/${tag.toLowerCase()}`;
+
+    this.titleSvc.setTitle(`#${display} Stories | ApnaInsights`);
+    this.meta.updateTag({ name: 'description',        content: `Read the latest stories tagged #${display} on ApnaInsights — community blogs written by real people.` });
+    this.meta.updateTag({ name: 'robots',             content: 'index, follow' });
+    this.meta.updateTag({ property: 'og:title',       content: `#${display} Stories | ApnaInsights` });
+    this.meta.updateTag({ property: 'og:description', content: `Explore #${display} content on ApnaInsights.` });
+    this.meta.updateTag({ property: 'og:url',         content: url });
+    this.meta.updateTag({ property: 'og:type',        content: 'website' });
+
+    let canonical = this.document.querySelector('link[rel="canonical"]') as HTMLLinkElement;
+    if (!canonical) {
+      canonical = this.document.createElement('link');
+      canonical.setAttribute('rel', 'canonical');
+      this.document.head.appendChild(canonical);
+    }
+    canonical.setAttribute('href', url);
+
+    const schema = [
+      {
+        '@context': 'https://schema.org',
+        '@type': 'CollectionPage',
+        name: `#${display} Stories`,
+        description: `Read the latest #${display} stories on ApnaInsights.`,
+        url,
+        isPartOf: { '@type': 'WebSite', url: 'https://apnainsights.com', name: 'ApnaInsights' },
+      },
+      {
+        '@context': 'https://schema.org',
+        '@type': 'BreadcrumbList',
+        itemListElement: [
+          { '@type': 'ListItem', position: 1, name: 'Home', item: 'https://apnainsights.com' },
+          { '@type': 'ListItem', position: 2, name: `#${display}`, item: url },
+        ],
+      },
+    ];
+    let el = this.document.getElementById('tag-schema');
+    if (!el) {
+      el = this.document.createElement('script');
+      el.id = 'tag-schema';
+      (el as HTMLScriptElement).type = 'application/ld+json';
+      this.document.head.appendChild(el);
+    }
+    el.textContent = JSON.stringify(schema);
+  }
+
+  navigateToBlog(post: Post): void {
+    this.router.navigate(['/blog', (post as any).slug || post._id]);
+    if (isPlatformBrowser(this.platformId)) window.scrollTo({ top: 0, behavior: 'instant' });
+  }
+
+  getAuthorName(post: Post): string {
+    return (post.user as any)?.name ?? 'Anonymous';
+  }
+
+  readingTime(content: string): number {
+    return Math.max(1, Math.ceil(content.replace(/<[^>]*>/g, '').trim().split(/\s+/).length / 200));
+  }
+}

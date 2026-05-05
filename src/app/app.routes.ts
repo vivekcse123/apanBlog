@@ -44,6 +44,16 @@ export const routes: Routes = [
         title: 'Category | ApnaInsights'
     },
     {
+        path: 'author/:id',
+        loadComponent: () => import('./features/landing/pages/author-page/author-page').then(m => m.AuthorPage),
+        title: 'Author | ApnaInsights'
+    },
+    {
+        path: 'tag/:tag',
+        loadComponent: () => import('./features/landing/pages/tag-page/tag-page').then(m => m.TagPage),
+        title: 'Tag | ApnaInsights'
+    },
+    {
         path: 'contact',
         redirectTo: 'about',
         pathMatch: 'full'

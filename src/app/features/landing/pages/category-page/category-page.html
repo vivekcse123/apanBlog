@@ -130,7 +130,7 @@
               <div class="cat-card-meta">
                 <span>{{ getAuthorName(post) }}</span>
                 <span class="meta-dot" aria-hidden="true">·</span>
-                <time [dateTime]="post.createdAt | date:'yyyy-MM-dd'">{{ post.createdAt | date:'MMM d, y' }}</time>
+                <time [attr.datetime]="post.createdAt | date:'yyyy-MM-dd'">{{ post.createdAt | timeAgo }}</time>
                 <span class="meta-dot" aria-hidden="true">·</span>
                 <span>{{ readingTime(post.content) }} min read</span>
               </div>

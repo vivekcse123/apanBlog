@@ -482,7 +482,7 @@
           <time class="card-date"
                 itemprop="datePublished"
                 [attr.datetime]="blog.createdAt">
-            {{ blog.createdAt | date:'MMM d' }}
+            {{ blog.createdAt | timeAgo }}
           </time>
         </div>
       </div>

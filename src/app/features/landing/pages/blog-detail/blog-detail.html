@@ -354,10 +354,21 @@
 
     @if (post()!.categories.length) {
       <div class="tags-section">
+        <h3 class="tags-title"><span class="tags-icon">📂</span> Categories</h3>
+        <div class="tags-list">
+          @for (cat of post()!.categories; track cat) {
+            <button class="tag-badge" (click)="filterByTag(cat)">{{ cat }}</button>
+          }
+        </div>
+      </div>
+    }
+
+    @if (post()!.tags.length) {
+      <div class="tags-section">
         <h3 class="tags-title"><span class="tags-icon">🏷️</span> Tags</h3>
         <div class="tags-list">
-          @for (tag of post()!.categories; track tag) {
-            <button class="tag-badge" (click)="filterByTag(tag)">{{ tag }}</button>
+          @for (tag of post()!.tags; track tag) {
+            <button class="tag-badge tag-badge--tag" (click)="navigateToTag(tag)">#{{ tag }}</button>
           }
         </div>
       </div>
@@ -385,7 +396,7 @@
       </button>
       <div class="author-card-body">
         <span class="author-card-label">About the author</span>
-        <button class="author-card-name" type="button" (click)="openAuthorModal()">{{ authorName }}</button>
+        <button class="author-card-name" type="button" (click)="navigateToAuthor()">{{ authorName }}</button>
         <p class="author-card-bio">
           {{ authorBio || 'A passionate writer sharing insights on ApnaInsights.' }}
         </p>
@@ -439,7 +450,7 @@
                 <div class="trending-meta">
                   <span>{{ tp.views | number }} views</span>
                   <span>·</span>
-                  <span>{{ tp.createdAt | date:'MMM d, y' }}</span>
+                  <span>{{ tp.createdAt | timeAgo }}</span>
                 </div>
               </div>
             </li>
@@ -557,6 +568,9 @@
         </div>
 
         <div class="apm-actions">
+          <button class="apm-profile-btn" (click)="closeAuthorModal(); navigateToAuthor()" type="button">
+            View full profile →
+          </button>
           <button class="apm-view-btn" (click)="openAuthorPostsModal()" type="button">
             View all blogs by {{ authorName }} →
           </button>

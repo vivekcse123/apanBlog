@@ -43,6 +43,14 @@
       "destination": "/api/ssr"
     },
     {
+      "source": "/author/:path*",
+      "destination": "/api/ssr"
+    },
+    {
+      "source": "/tag/:path*",
+      "destination": "/api/ssr"
+    },
+    {
       "source": "/((?!ads\\.txt|robots\\.txt|sitemap\\.xml|api/).*)",
       "destination": "/index.csr.html"
     }

@@ -29,6 +29,7 @@
 
 
   <!-- canonical is set per-page by each component's setMetaTags() -->
+  <link rel="alternate" type="application/rss+xml" title="ApnaInsights RSS Feed" href="https://apnainsights.com/api/rss">
   <!-- Preconnect to Google ad servers for faster ad load -->
   <link rel="preconnect" href="https://pagead2.googlesyndication.com" crossorigin>
   <link rel="preconnect" href="https://googleads.g.doubleclick.net" crossorigin>
@@ -128,6 +129,18 @@
   <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
 
   <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-6477809641944524" crossorigin="anonymous"></script>
+
+  <!-- Google Analytics 4 — async, does not block render or LCP -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-J0EC5NG5M7"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-J0EC5NG5M7', {
+      send_page_view: true,
+      anonymize_ip: true
+    });
+  </script>
 </head>
 <body>
   <app-root></app-root>
