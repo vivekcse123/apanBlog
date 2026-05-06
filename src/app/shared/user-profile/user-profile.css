@@ -1,8 +1,8 @@
 /* ── Panel shell ── */
 .profile-panel {
-  position: fixed;
-  top: 68px;
-  right: 18px;
+  position: absolute;
+  top: calc(100% + 8px);
+  right: 0;
   width: 240px;
   background: var(--bg-surface);
   border: 1px solid var(--border);

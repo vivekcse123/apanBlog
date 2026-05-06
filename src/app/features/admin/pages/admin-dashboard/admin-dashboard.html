@@ -33,22 +33,22 @@
       (open)="openProfile()"
       (searchChange)="onSearch($event)"
       (menuToggle)="toggleSidebar()">
+      @if (isOpened()) {
+        <app-user-profile
+          profilePanel
+          [name]="user()?.name"
+          [email]="user()?.email"
+          [role]="user()?.role"
+          [avatar]="avatar()"
+          [userId]="userId() ?? ''"
+          [basePath]="'admin'"
+          [totalBlogs]="user()?.totalBlogs ?? 0"
+          [totalViews]="user()?.totalViews ?? 0"
+          (close)="closeProfile()"
+          (logout)="logout()">
+        </app-user-profile>
+      }
     </app-common-header>
-
-    @if (isOpened()) {
-      <app-user-profile
-        [name]="user()?.name"
-        [email]="user()?.email"
-        [role]="user()?.role"
-        [avatar]="avatar()"
-        [userId]="userId() ?? ''"
-        [basePath]="'admin'"
-        [totalBlogs]="user()?.totalBlogs ?? 0"
-        [totalViews]="user()?.totalViews ?? 0"
-        (close)="closeProfile()"
-        (logout)="logout()">
-      </app-user-profile>
-    }
 
     <div class="dash-content">
       <router-outlet></router-outlet>

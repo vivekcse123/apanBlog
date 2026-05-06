@@ -224,16 +224,19 @@
 
     <app-notification-panel />
 
-    <button class="ch-avatar-btn"
-            [class.ch-avatar-btn--open]="profileOpen"
-            (click)="openProfile($event)"
-            [attr.aria-label]="'Profile: ' + displayName">
-      @if (avatarUrl) {
-        <img [src]="avatarUrl" alt="" class="ch-avatar-img"/>
-      } @else {
-        <span aria-hidden="true">{{ profile?.charAt(0) }}</span>
-      }
-    </button>
+    <div class="ch-avatar-wrapper">
+      <button class="ch-avatar-btn"
+              [class.ch-avatar-btn--open]="profileOpen"
+              (click)="openProfile($event)"
+              [attr.aria-label]="'Profile: ' + displayName">
+        @if (avatarUrl) {
+          <img [src]="avatarUrl" alt="" class="ch-avatar-img"/>
+        } @else {
+          <span aria-hidden="true">{{ profile?.charAt(0) }}</span>
+        }
+      </button>
+      <ng-content select="[profilePanel]"></ng-content>
+    </div>
   </div>
 
 </div>
