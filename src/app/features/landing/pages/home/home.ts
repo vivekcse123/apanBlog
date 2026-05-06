@@ -550,11 +550,30 @@ export class Home implements OnInit, OnDestroy {
       queryParams: next ? { category: next } : {},
       replaceUrl: true,
     });
-    if (isPlatformBrowser(this.platformId)) {
-      const filterEl = this.document.querySelector('.filter-wrap') as HTMLElement;
-      const top = filterEl ? filterEl.getBoundingClientRect().top + window.scrollY - 10 : 45;
-      window.scrollTo({ top, behavior: 'smooth' });
-    }
+    if (!isPlatformBrowser(this.platformId)) return;
+
+    // Double rAF — waits for Angular to render filtered results into DOM
+    requestAnimationFrame(() => {
+      requestAnimationFrame(() => {
+        const filterWrap  = this.document.querySelector('.filter-wrap') as HTMLElement;
+        const resultsEl   = this.document.getElementById('results-heading')
+                              ?.closest('section') as HTMLElement | null;
+
+        if (next && resultsEl) {
+          // Scroll so results appear just below the sticky filter bar
+          const filterBottom = filterWrap
+            ? filterWrap.getBoundingClientRect().bottom
+            : 66;
+          const resultsTop = resultsEl.getBoundingClientRect().top + window.scrollY
+                             - filterBottom - 12;
+          window.scrollTo({ top: Math.max(0, resultsTop), behavior: 'smooth' });
+        } else if (filterWrap) {
+          // Category cleared — bring filter into view without going to page top
+          const filterTop = filterWrap.getBoundingClientRect().top + window.scrollY - 70;
+          window.scrollTo({ top: Math.max(0, filterTop), behavior: 'smooth' });
+        }
+      });
+    });
   }
 
   prevPage(page: WritableSignal<number>): void {

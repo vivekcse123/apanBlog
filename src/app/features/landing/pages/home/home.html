@@ -118,13 +118,31 @@
     <link itemprop="url" href="https://apnainsights.com" />
 
     <div class="hero-content">
-      <span class="hero-pill" aria-hidden="true">✦ Community Stories</span>
+      <span class="hero-pill" aria-hidden="true">✦ Free Community Blogging Platform</span>
       <h1 class="hero-title" id="hero-heading">
-        Stories from <span class="hero-gradient">Every Corner</span>
+        Real Stories. <span class="hero-gradient">Every Topic.</span>
       </h1>
       <p class="hero-sub">
-        Discover blogs written by real people sharing real experience 🌿
+        From village life to tech breakthroughs, cricket to cooking, health to business - 
+        explore authentic blogs across <strong>14 topics</strong> written by real people from around the world.
       </p>
+
+      <nav class="hero-cats" aria-label="Browse by category">
+        <a class="hero-cat-chip" routerLink="/category/news">📰 News</a>
+        <a class="hero-cat-chip" routerLink="/category/technology">💻 Technology</a>
+        <a class="hero-cat-chip" routerLink="/category/health">❤️ Health</a>
+        <a class="hero-cat-chip" routerLink="/category/sports">🏏 Sports</a>
+        <a class="hero-cat-chip" routerLink="/category/village">🌾 Village</a>
+        <a class="hero-cat-chip" routerLink="/category/business">💼 Business</a>
+        <a class="hero-cat-chip" routerLink="/category/entertainment">🎭 Entertainment</a>
+        <a class="hero-cat-chip" routerLink="/category/education">📚 Education</a>
+        <a class="hero-cat-chip" routerLink="/category/lifestyle">🌿 Lifestyle</a>
+        <a class="hero-cat-chip" routerLink="/category/cooking">🍳 Cooking</a>
+        <a class="hero-cat-chip" routerLink="/category/exercise">🏋️ Exercise</a>
+        <a class="hero-cat-chip" routerLink="/category/social">🤝 Social</a>
+        <a class="hero-cat-chip" routerLink="/category/quotes">💬 Quotes</a>
+        <a class="hero-cat-chip" routerLink="/category/update">📢 Update</a>
+      </nav>
 
       @if (!isLoading() && allPosts().length > 0) {
         <div class="hero-stats"
@@ -493,24 +511,17 @@
       </div>
 
       <div class="card-body" (click)="readBlog(blog.slug || blog._id)">
-        <h3 itemprop="name">{{ blog.title }}</h3>
-        <p itemprop="abstract">{{ blog.description }}</p>
         <div class="card-author-row">
           <span class="card-author-avatar">{{ (blog.user?.name || 'A').charAt(0).toUpperCase() }}</span>
           <span class="card-author-name">{{ blog.user?.name || 'Anonymous' }}</span>
-        </div>
-        <div class="card-meta-row">
-          <span class="card-reading-time">
-            <time aria-label="{{ getReadingTime(blog) }} minute read">
-              ⏱ {{ getReadingTime(blog) }} min read
-            </time>
-          </span>
-          <time class="card-date"
-                itemprop="datePublished"
-                [attr.datetime]="blog.createdAt">
+          <span class="card-meta-sep" aria-hidden="true">·</span>
+          <time class="card-date" itemprop="datePublished" [attr.datetime]="blog.createdAt">
             {{ blog.createdAt | timeAgo }}
           </time>
         </div>
+        <h3 itemprop="name">{{ blog.title }}</h3>
+        <p itemprop="abstract">{{ blog.description }}</p>
+        <span class="card-reading-time">⏱ {{ getReadingTime(blog) }} min read</span>
       </div>
 
       <div class="card-footer">

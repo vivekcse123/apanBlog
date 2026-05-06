@@ -81,7 +81,7 @@
             <tr class="rm-row">
               <td class="cell-user">
                 <div class="user-avatar-sm">{{ getInitials(user.name) }}</div>
-                <span class="user-name-txt">{{ user.name }}</span>
+                <span class="user-name-txt">{{ user.name | titlecase}}</span>
               </td>
               <td class="cell-email">{{ user.email }}</td>
               <td class="cell-role">
